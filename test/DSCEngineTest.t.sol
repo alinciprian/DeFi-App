@@ -16,6 +16,7 @@ contract DSCEngineTest is Test {
     address ethUsdPriceFeed;
     address btcUsdPriceFeed;
     address weth;
+    address wbtc;
 
     address public USER = makeAddr("user");
     uint256 public constant AMOUNT_COLLATERAL = 10 ether;
@@ -24,7 +25,7 @@ contract DSCEngineTest is Test {
     function setUp() public {
         deployer = new DeployDSC();
         (dsc, dsce, config) = deployer.run();
-        (ethUsdPriceFeed, btcUsdPriceFeed, weth,,) = config.activeNetworkConfig();
+        (ethUsdPriceFeed, btcUsdPriceFeed, weth, wbtc,) = config.activeNetworkConfig();
 
         ERC20Mock(weth).mint(USER, STARTING_ERC20_BALANCE);
     }
@@ -42,6 +43,24 @@ contract DSCEngineTest is Test {
 
         vm.expectRevert(DSCEngine.DSCEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength.selector);
         new DSCEngine(tokenAddresses, priceFeedAddresses, address(dsc));
+    }
+
+    function testIfPriceFeedsInitializesCorrectly() public {
+        tokenAddresses.push(weth);
+        tokenAddresses.push(wbtc);
+
+        priceFeedAddresses.push(ethUsdPriceFeed);
+        priceFeedAddresses.push(btcUsdPriceFeed);
+
+        dsce = new DSCEngine(tokenAddresses, priceFeedAddresses, address(dsc));
+
+        address toBeCompared = dsce.getPriceFeeds(tokenAddresses[0]);
+        address[] memory collateralTokens = dsce.getSupportedCollateralTokens();
+
+        assertEq(toBeCompared, priceFeedAddresses[0]);
+        assertEq(dsce.getPriceFeeds(tokenAddresses[1]), priceFeedAddresses[1]);
+        assertEq(collateralTokens.length, 2);
+        assertEq(address(dsce.getDscAddress()), address(dsc));
     }
 
     function testGestUsdValue() public view {

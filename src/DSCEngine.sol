@@ -254,4 +254,16 @@ contract DSCEngine is ReentrancyGuard {
         (, int256 price,,,) = priceFeed.latestRoundData();
         return ((uint256(price) * ADDITIONAL_FEED_PRECISION) * amount / PRECISION);
     }
+
+    function getPriceFeeds(address token) external view returns (address) {
+        return s_priceFeeds[token];
+    }
+
+    function getSupportedCollateralTokens() external view returns (address[] memory) {
+        return s_collateralTokens;
+    }
+
+    function getDscAddress() external view returns (DecentralizedStableCoin) {
+        return i_dsc;
+    }
 }
