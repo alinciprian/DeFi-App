@@ -1,5 +1,8 @@
-//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
+/*
+
+//SPDX-License-Identifier: MIT
+
 
 import {Test, console} from "../lib/forge-std/src/Test.sol";
 import {DeployDSC} from "../script/DeployDSC.s.sol";
@@ -266,3 +269,5 @@ contract DSCEngineTest is Test {
         assertEq(expectedWeth, actualWeth);
     }
 }
+
+*/
