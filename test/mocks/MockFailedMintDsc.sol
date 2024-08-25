@@ -6,7 +6,7 @@ import {
 } from "../../lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import {Ownable} from "../../lib/openzeppelin-contracts//contracts/access/Ownable.sol";
 
-contract MockFailedMintDSC is ERC20Burnable, Ownable {
+contract MockFailedMintDsc is ERC20Burnable, Ownable {
     error DecentralizedStableCoin__AmountMustBeMoreThanZero();
     error DecentralizedStableCoin__BurnAmountExceedsBalance();
     error DecentralizedStableCoin__NotZeroAddress();
