@@ -8,9 +8,9 @@ pragma solidity ^0.8.18;
 /**
  * @title Decentralized Stable Coin
  * @author AlinCiprian
- * Collateral: Exogenous(ETC & BTC)
+ * Collateral: Exogenous(wETH & wBTC)
  * Minting: Alghoritmic
- * Relative Stability: Peddeg to USD
+ * Relative Stability: Pegged to USD
  *
  * This contract is meant to be governed by DSCEngine. Here is just ERC20 implementation of
  * a stablecoin
